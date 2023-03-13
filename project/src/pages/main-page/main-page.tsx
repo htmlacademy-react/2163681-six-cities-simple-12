@@ -1,4 +1,4 @@
-import offerCardRender from '../../components/offer-card-component';
+import OfferCardComponent from '../../components/app/offer-card-component/offer-card-component';
 
 type AmountRentalOffersProps = {
   amountRentalOffers: number;
@@ -94,7 +94,7 @@ function MainPage({amountRentalOffers}:AmountRentalOffersProps): JSX.Element {
               </form>
 
               <div className="cities__places-list places__list tabs__content">
-                {offerCardRender()};
+                {Array.from({ length: 5 }, (v, k) => k).map((el) => <OfferCardComponent key={el} />)};
               </div>
 
             </section>

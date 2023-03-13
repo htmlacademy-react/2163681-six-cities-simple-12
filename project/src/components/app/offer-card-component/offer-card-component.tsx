@@ -1,28 +1,11 @@
-const AMOUNT_OFFER_CARD = 5;
-
-
-function offerCardRender() {
-  const arrayOfferCards = [];
-
-  for (let i = 0; i < AMOUNT_OFFER_CARD; i++) {
-    arrayOfferCards.push(OfferCardComponent({key: i}));
-  }
-
-  const offerCard = arrayOfferCards.map((OneOfferCard, index) =>
-    <div key ={OneOfferCard.id}>{OneOfferCard.content}</div>);
-
-  return offerCard;
-}
-
-
-function OfferCardComponent({key}: { key: number }) {
-  const offerCardContent = (
+function OfferCardComponent():JSX.Element {
+  return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <a href="src/components/app/offer-card-component/offer-card-component#">
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image"/>
         </a>
       </div>
@@ -40,19 +23,12 @@ function OfferCardComponent({key}: { key: number }) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="src/components/app/offer-card-component/offer-card-component#">Beautiful &amp; luxurious apartment at great location</a>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
     </article>
   );
-
-  const offerCardObject = {
-    id: key,
-    content: offerCardContent
-  };
-
-  return offerCardObject;
 }
 
-export default offerCardRender;
+export default OfferCardComponent;
