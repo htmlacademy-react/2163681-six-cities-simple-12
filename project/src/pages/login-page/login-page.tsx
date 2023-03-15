@@ -1,3 +1,5 @@
+import LogoComponent from '../../components/app/logo-component/logo-component';
+
 function LoginPage() {
   return (
     <div className="page page--gray page--login">
@@ -25,9 +27,7 @@ function LoginPage() {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main-page/main-page.tsx">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              <LogoComponent/>
             </div>
           </div>
         </div>
