@@ -1,18 +1,29 @@
-function OfferCardComponent():JSX.Element {
+import {OffersType} from '../../types/offersType';
+import {Link} from 'react-router-dom';
+
+type OfferCardComponentProps = {
+  offer: OffersType;
+  setActiveOffer: (id: number) => void;
+}
+
+function OfferCardComponent({offer, setActiveOffer}: OfferCardComponentProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={() => {
+      setActiveOffer(offer.id);
+    }}
+    >
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="src/components/app/offer-card-component/offer-card-component#">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image"/>
+        <a>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
         </div>
@@ -23,9 +34,9 @@ function OfferCardComponent():JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="src/components/app/offer-card-component/offer-card-component#">Beautiful &amp; luxurious apartment at great location</a>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

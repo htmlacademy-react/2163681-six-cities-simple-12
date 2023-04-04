@@ -1,4 +1,4 @@
-import LogoComponent from '../../components/app/logo-component/logo-component';
+import LogoComponent from '../../components/logo-component/logo-component';
 
 function LoginPage() {
   return (

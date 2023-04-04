@@ -1,12 +1,17 @@
-import OfferCardComponent from '../../components/app/offer-card-component/offer-card-component';
-import LogoComponent from '../../components/app/logo-component/logo-component';
-import CredentialComponent from '../../components/app/credential-component/credential-component';
+import OfferCardComponent from '../../components/offer-card-component/offer-card-component';
+import LogoComponent from '../../components/logo-component/logo-component';
+import CredentialComponent from '../../components/credential-component/credential-component';
+import {OffersType} from '../../types/offersType';
+import {useState} from 'react';
 
-type AmountRentalOffersProps = {
+type MainPageProps = {
   amountRentalOffers: number;
+  offers: OffersType [];
 }
 
-function MainPage({amountRentalOffers}:AmountRentalOffersProps): JSX.Element {
+function MainPage({amountRentalOffers, offers}:MainPageProps): JSX.Element {
+  const [, setActiveOffer] = useState < null | number > (null);
+
   return (
     <div>
       <header className="header">
@@ -80,7 +85,7 @@ function MainPage({amountRentalOffers}:AmountRentalOffersProps): JSX.Element {
               </form>
 
               <div className="cities__places-list places__list tabs__content">
-                {Array.from({ length: 5 }, (v, k) => k).map((el) => <OfferCardComponent key={el} />)};
+                {offers.map((offer) => (<OfferCardComponent offer={offer} setActiveOffer={setActiveOffer} key={offer.id}/>))};
               </div>
 
             </section>
