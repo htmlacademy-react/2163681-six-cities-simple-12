@@ -1,5 +1,5 @@
-import LogoComponent from '../../components/app/logo-component/logo-component';
-import CredentialComponent from '../../components/app/credential-component/credential-component';
+import LogoComponent from '../../components/logo-component/logo-component';
+import CredentialComponent from '../../components/credential-component/credential-component';
 
 function NotFoundPage() {
   return (
