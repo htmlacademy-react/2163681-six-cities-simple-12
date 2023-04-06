@@ -2,8 +2,8 @@ import {useState} from 'react';
 
 function FeedbackFormComponent(){
   const[userReview, setUserReview] = useState( {review: ''});
-  const uppDatesState = (evt) => {
-    const {name, value} = evt.target;
+  const updateFormState = (env) => {
+    const {name, value} = env.target;
     setUserReview({...userReview, [name]: value});
   };
 
@@ -57,7 +57,7 @@ function FeedbackFormComponent(){
         </label>
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
-        placeholder="Tell how was your stay, what you like and what can be improved" onChange={uppDatesState} value={userReview.review}
+        placeholder="Tell how was your stay, what you like and what can be improved" onChange={updateFormState} value={userReview.review}
       >
       </textarea>
       <div className="reviews__button-wrapper">

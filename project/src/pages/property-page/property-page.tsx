@@ -2,7 +2,7 @@ import LogoComponent from '../../components/logo-component/logo-component';
 import CredentialComponent from '../../components/credential-component/credential-component';
 import FeedbackFormComponent from '../../components/feedback-form-component/feedback-form-component';
 import ReviewComponent from '../../components/review-component/review-component';
-import {useParams} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import {OffersType} from '../../types/offersType';
 import {ReviewsType} from '../../types/reviewsType';
 
@@ -28,7 +28,12 @@ const renderIsPro = (offer: OffersType | undefined): JSX.Element | undefined => 
 
 function PropertyPage({offers, reviews}: PropertyPageProps) {
   const id = useParams().id;
-  const offer = offers.find((o: OffersType) => o.id === Number(id));
+  const currentOffer = offers.find((offer) => offer.id === Number(id));
+
+  if (!currentOffer) {
+    return <Navigate to="/404"/>;
+  }
+
   return (
     <div className="page">
       <div style={{display: 'none'}}>
@@ -66,17 +71,17 @@ function PropertyPage({offers, reviews}: PropertyPageProps) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {offer?.images.map((img: string) => (<ImageComponent image={img} key={img}/>)) || ''};
+              {currentOffer.images.map((img: string) => (<ImageComponent image={img} key={img}/>)) || ''};
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
-                <span>{offer?.type || ''}</span>
+                <span>{currentOffer.type}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {offer?.title || ''}
+                  {currentOffer.title}
                 </h1>
               </div>
               <div className="property__rating rating">
@@ -84,27 +89,27 @@ function PropertyPage({offers, reviews}: PropertyPageProps) {
                   <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{offer?.rating || ''}</span>
+                <span className="property__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {offer?.type || ''}
+                  {currentOffer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offer?.bedrooms || ''} Bedrooms
+                  {currentOffer.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {offer?.maxAdults || ''} adults
+                  Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{offer?.price || ''}</b>
+                <b className="property__price-value">&euro;{currentOffer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {offer?.goods.map((good: string) => (
+                  {currentOffer.goods.map((good: string) => (
                     <li className="property__inside-item" key={good}>{good}</li>)) || ''}
                 </ul>
               </div>
@@ -112,13 +117,13 @@ function PropertyPage({offers, reviews}: PropertyPageProps) {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={offer?.host.avatarUrl || ''} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
-                  <span className="property__user-name">{offer?.host.name || ''}</span>
-                  {renderIsPro(offer)}
+                  <span className="property__user-name">{currentOffer.host.name}</span>
+                  {renderIsPro(currentOffer)}
                 </div>
                 <div className="property__description">
-                  <p className="property__text">{offer?.description || ''}</p>
+                  <p className="property__text">{currentOffer.description}</p>
                 </div>
               </div>
               <section className="property__reviews reviews">
