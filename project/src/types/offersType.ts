@@ -5,13 +5,14 @@ type HostTypeMocks = {
   name: string;
 }
 
-type CityLocationTypeMocks = {
+export type CityLocationTypeMocks = {
   latitude: number;
   longitude: number;
   zoom: number;
 }
 
-type CityTypeMocks = {
+export type CityTypeMocks = {
+  // latitude: number;
   location: CityLocationTypeMocks;
   name: string;
 }
