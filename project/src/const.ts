@@ -3,4 +3,3 @@ export enum AppPageRoutes {
   Login = '/login',
   Room = '/offer/:id'
 }
-

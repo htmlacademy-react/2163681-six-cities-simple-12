@@ -3,6 +3,7 @@ import LogoComponent from '../../components/logo-component/logo-component';
 import CredentialComponent from '../../components/credential-component/credential-component';
 import {OffersType} from '../../types/offersType';
 import {useState} from 'react';
+import MapComponent from '../../components/map-component/map-component';
 
 type MainPageProps = {
   amountRentalOffers: number;
@@ -10,7 +11,7 @@ type MainPageProps = {
 }
 
 function MainPage({amountRentalOffers, offers}:MainPageProps): JSX.Element {
-  const [, setActiveOffer] = useState < null | number > (null);
+  const [activeOffer, setActiveOffer] = useState < null | number > (null);
 
   return (
     <div>
@@ -89,9 +90,13 @@ function MainPage({amountRentalOffers, offers}:MainPageProps): JSX.Element {
               </div>
 
             </section>
+
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <MapComponent offers={offers} activeOffer={activeOffer}/>
+              </section>
             </div>
+
           </div>
         </div>
       </main>
