@@ -1,9 +1,9 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 
 function FeedbackFormComponent(){
   const[userReview, setUserReview] = useState( {review: ''});
-  const updateFormState = (env) => {
-    const {name, value} = env.target;
+  const updateFormState = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const {name, value}: HTMLTextAreaElement = evt.target;
     setUserReview({...userReview, [name]: value});
   };
 

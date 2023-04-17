@@ -44,8 +44,8 @@ export const offers: OffersType [] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 53.370216,
-        longitude: 5.895168,
+        latitude: 52.370216,
+        longitude: 4.895168,
         zoom: 10
       },
       name: 'Amsterdam'

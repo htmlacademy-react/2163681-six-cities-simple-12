@@ -5,13 +5,16 @@ import ReviewComponent from '../../components/review-component/review-component'
 import {Navigate, useParams} from 'react-router-dom';
 import {OffersType} from '../../types/offersType';
 import {ReviewsType} from '../../types/reviewsType';
+import {useState} from 'react';
+import MapComponent from '../../components/map-component/map-component';
+import OfferCardComponent from '../../components/offer-card-component/offer-card-component';
 
 type PropertyPageProps = {
   offers: OffersType[];
   reviews: ReviewsType[];
 }
 
-type ImageProps ={
+type ImageProps = {
   image: string;
 }
 
@@ -28,11 +31,14 @@ const renderIsPro = (offer: OffersType | undefined): JSX.Element | undefined => 
 
 function PropertyPage({offers, reviews}: PropertyPageProps) {
   const id = useParams().id;
-  const currentOffer = offers.find((offer) => offer.id === Number(id));
+  const [activeOffer, setActiveOffer] = useState<null | number>(null);
+  const currentOffer: OffersType | undefined = offers.find((offer) => offer.id === Number(id));
 
   if (!currentOffer) {
     return <Navigate to="/404"/>;
   }
+
+  const offersNearby: OffersType[] = offers.filter((offer) => offer.id !== currentOffer.id).slice(0, 3);
 
   return (
     <div className="page">
@@ -117,7 +123,9 @@ function PropertyPage({offers, reviews}: PropertyPageProps) {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74"
+                      height="74" alt="Host avatar"
+                    />
                   </div>
                   <span className="property__user-name">{currentOffer.host.name}</span>
                   {renderIsPro(currentOffer)}
@@ -137,93 +145,16 @@ function PropertyPage({offers, reviews}: PropertyPageProps) {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map" style={{width: '90%', marginLeft: '5%'}} >
+            <MapComponent offers={[...offersNearby, currentOffer]} activeOffer={activeOffer}/>
+          </section>
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"/>
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;80</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
-                  </h2>
-                  <p className="place-card__type">Private room</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image"/>
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;132</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Canal View Prinsengracht</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="place-card__mark">
-                  <span>Premium</span>
-                </div>
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image"/>
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;180</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '100%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Nice, cozy, warm big bed apartment</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
+              {offersNearby.map((offer) => (<OfferCardComponent offer={offer} setActiveOffer={setActiveOffer} key={offer.id}/>))};
             </div>
           </section>
         </div>
